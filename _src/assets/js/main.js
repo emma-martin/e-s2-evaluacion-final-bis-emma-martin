@@ -3,6 +3,8 @@ const btn = document.querySelector('.btn');
 const cardTable = document.querySelector('.game__container');
 const backCardImg = `https://via.placeholder.com/160x195/30d9c4/ffffff/?text=ADALAB`;
 let cardElement = document.querySelectorAll('.card__element');
+let firstCard = '';
+let firstCardClicked = '';
 
 //LS: 1. generate key. 2. assign to a var getItem method plus create empty element;
 const CARDS_LS_KEY = 'cards';
@@ -13,13 +15,13 @@ function updateLS(){
 }
 
 //Retrieve last input checked. 1. select input by its value (defined at LS). 2. then check if checked = true. 3. init function when open window.
-getInputValue();
+
 
 function getInputValue(){
   let inputValue = document.querySelector(`input[name="form__input"][value="${cardsNumber}"]`);
   inputValue.checked = true;
 }
-
+getInputValue();
 //helpers handleAPI
 
 const handleResponse = response => {
@@ -38,6 +40,9 @@ const dealCards = cards => {
     const imgCard = document.createElement('img');
     imgCard.classList.add('front', 'hidden');
     imgCard.setAttribute('src', src);
+    const idImg = cards[i].pair;
+    imgCard.setAttribute('id', idImg);
+
     const imgCardBack = document.createElement('img');
     imgCardBack.classList.add('back');
     imgCardBack.setAttribute('src', `${backCardImg}`);
@@ -47,28 +52,59 @@ const dealCards = cards => {
   }
   cardElement = document.querySelectorAll('.card__element');
   addEventListenerToList(cardElement);
+
 };
 
-
-
 //Get both images from event. Retrieve Nodelist with two elements. Go through them by [x] and toggle class;
-function toggleCards(event){
+function handleCards(event){
   const cardsSelected = event.currentTarget;
-  const cardsFlip = cardsSelected.querySelectorAll('img');
-  //console.log(cardsFlip);
-  cardsFlip[0].classList.toggle('hidden');
-  cardsFlip[1].classList.toggle('hidden');
+  const imgsFromLi = cardsSelected.querySelectorAll('img');
+  toggleCards(imgsFromLi);
+  checkCards(imgsFromLi);
+
 }
 
-//add event listener to elements of List
-function addEventListenerToList(cardElement){
-  for(const el of cardElement){
-    el.addEventListener('click', toggleCards);
+function toggleCards(imgsArray) {
+  imgsArray[0].classList.toggle('hidden');
+  imgsArray[1].classList.toggle('hidden');
+}
+
+
+//create const function to set Timeout in checkCards
+function delayCardsToggle(imgsArray) {
+  toggleCards(imgsArray);
+  toggleCards(firstCardClicked);
+}
+
+
+function checkCards(imgsArray) {
+  const cardId = imgsArray[0].id;
+  if (!firstCard) {
+    firstCard = cardId;
+    firstCardClicked = imgsArray;
+  }
+  else if (firstCard !== cardId){
+    firstCard = '';
+    // toggleCards(imgsArray);
+    // toggleCards(firstCardClicked);
+    const timeOutVar = setTimeout(delayCardsToggle(imgsArray), 2000);
+    timeOutVar;
+  }
+  else {
+    firstCard = '';
+    firstCardClicked = '';
   }
 }
 
 
 
+
+//add event listener to elements of List
+function addEventListenerToList(cardElement){
+  for(const el of cardElement){
+    el.addEventListener('click', handleCards);
+  }
+}
 
 
 function handleAPI(){
