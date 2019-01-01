@@ -8,7 +8,8 @@ let firstCardClicked = '';
 
 //LS: 1. generate key. 2. assign to a var getItem method plus create empty element;
 const CARDS_LS_KEY = 'cards';
-let cardsNumber = JSON.parse(localStorage.getItem(CARDS_LS_KEY)) || '';
+let defaultChecked = document.querySelector('input[name="form__input"][checked]').value;
+let cardsNumber = JSON.parse(localStorage.getItem(CARDS_LS_KEY)) || defaultChecked;
 //3. To set items, retrieve key and convert to string cardsNumbers. This especimen will be retrieved from handleAPI function, where the cardNumber is taken from inputs and then updated(set to LS);
 function updateLS(){
   localStorage.setItem(CARDS_LS_KEY, JSON.stringify(cardsNumber));
@@ -95,9 +96,6 @@ function checkCards(imgsArray) {
     firstCardClicked = '';
   }
 }
-
-
-
 
 //add event listener to elements of List
 function addEventListenerToList(cardElement){
