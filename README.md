@@ -12,7 +12,7 @@ You'll need Node.js and Gulp on your local development machine.
 
 ### Clone the repo
 * Run $ npm install --global gulp-cli to install gulp-cli
-* Run $ npm install to install th dependencies
+* Run $ npm install to install dependencies
 * Run $ gulp
 * Visit http://localhost:3000
 
