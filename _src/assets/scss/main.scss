@@ -1,0 +1,30 @@
+@import 'core/settings';
+
+body {
+	background: url('../images/logo-adalab-80px.png') center center no-repeat $color-white;
+	height: 100vh;
+}
+
+.game__container{
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+}
+.card__element{
+  margin-left: 12px;
+}
+.front{
+  width: 160px;
+  height: 195px;
+  border: 1px black solid;
+}
+
+.back{
+  border: 1px black solid;
+  border-radius: 5px;
+}
+
+.hidden{
+  display: none;
+  width: 300px;
+}
